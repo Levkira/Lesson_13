@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Lesson 13</title>
+</head>
+<body>
+	<script>
+        function Student(name, surname, birthday) {
+            this.name = name;
+            this.surname = surname;
+            this.birthday = new Date(birthday);
+            this.marks = [];
+            this.attendance = [];
+        };
+        
+        Student.prototype.getAge = function() {
+            let date = new Date();
+            return Math.floor((date - this.birthday) / 31536000000);
+        };
+        
+        Student.prototype.getAverageMark = function() {
+            return this.marks.reduce((sum, mark) => {
+                return sum += mark;
+            },0)/this.marks.length;
+        };
+        
+        Student.prototype.present = function() {
+            if(this.attendance.length < 30) {
+                return this.attendance.push(true);
+            }  
+        };
+        
+        Student.prototype.absent = function() {
+            if(this.attendance.length < 30) {
+                return this.attendance.push(false);
+            }  
+        };
+        
+        Student.prototype.mark = function(mark) {
+            if(mark < 0 || mark > 10) {
+                return 'Oценка от 0 до 10!';
+            }
+            if(this.marks.length < 30) {
+                return this.marks.push(mark);
+            } 
+        };
+        
+        Student.prototype.getAverageAttendance = function() {
+            return this.attendance.filter(item => item === true).length / this.attendance.length;
+        };
+        
+        Student.prototype.summary = function() {
+            if(this.getAverageMark() >= 9 && this.getAverageAttendance() >=0.9) {
+                return 'Ути какой молодчинка!';
+            } else if(this.getAverageMark() >= 9 || this.getAverageAttendance() >=0.9) {
+                return 'Норм, но можно лучше';
+            } else {
+                return 'Редиска!';
+            }
+        };
+        
+        const ivan = new Student('Ivan','Ivanov','02/02/2000');
+	</script>
+</body>
+</html>
+
