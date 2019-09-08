@@ -10,8 +10,8 @@
             this.name = name;
             this.surname = surname;
             this.birthday = new Date(birthday);
-            this.marks = [];
-            this.attendance = [];
+            this.marks = new Array(30);
+            this.attendance = new Array(30);
         };
         
         Student.prototype.getAge = function() {
@@ -26,24 +26,27 @@
         };
         
         Student.prototype.present = function() {
-            if(this.attendance.length < 30) {
-                return this.attendance.push(true);
-            }  
+            let index = getEmpty(this.attendance);
+            if(index !== -1) {
+                return this.attendance[index] = true;
+            }
         };
         
         Student.prototype.absent = function() {
-            if(this.attendance.length < 30) {
-                return this.attendance.push(false);
-            }  
+            let index = getEmpty(this.attendance);
+            if(index !== -1) {
+                return this.attendance[index] = false;
+            }
         };
         
         Student.prototype.mark = function(mark) {
             if(mark < 0 || mark > 10) {
                 return 'Oценка от 0 до 10!';
             }
-            if(this.marks.length < 30) {
-                return this.marks.push(mark);
-            } 
+            let index = getEmpty(this.marks);
+            if(index !== -1) {
+                return this.marks[index] = mark;
+            }
         };
         
         Student.prototype.getAverageAttendance = function() {
@@ -58,6 +61,15 @@
             } else {
                 return 'Редиска!';
             }
+        };
+        
+        let getEmpty = function(arr) {
+            let empty = arr.findIndex(function(el) {
+                if(el === undefined) {
+                    return true;
+                }
+            });
+            return empty;
         };
         
         const ivan = new Student('Ivan','Ivanov','02/02/2000');
